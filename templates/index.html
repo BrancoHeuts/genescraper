@@ -6,7 +6,7 @@
 -->
 <html>
 	<head>
-		<title>Read Only by HTML5 UP</title>
+		<title>Gene Card Scroller</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
@@ -21,7 +21,7 @@
 				<nav id="nav">
 					<ul>
 						{% for data in data: %}
-							<li><a href="one" class="active">{{ data['gene_name'] }}</a></li>
+							<li><a href="#section_{{ data['gene_name'] }}">{{ data['gene_name'] }}</a></li>
 						{% endfor %}
 					</ul>
 				</nav>
@@ -35,23 +35,29 @@
 
 						<!-- One -->
 						{% for data in data: %}
-							<section id="one">
+						<section id="section_{{ data['gene_name'] }}">
 								<div class="container">
 									<h3>{{ data['gene_name'] }}</h3>
 
-										<h5>Description</h5>
-											<ul>
-												{% for item in data['alias_description']: %}
-													<li>{{ item }}</li>
-												{% endfor %}
-											</ul>
+									<div class="row">
+											<div class="col-6 col-12-xsmall">
+												<h5>Description</h5>
+													<ul>
+														{% for item in data['alias_description']: %}
+															<li>{{ item }}</li>
+														{% endfor %}
+													</ul>
+											</div>
+											<div class="col-6 col-12-xsmall">
+												<h5>Alias</h5>
+													<ul>
+														{% for item in data['alias_alternate_name']: %}
+															<li>{{ item }}</li>
+														{% endfor %}
+													</ul>
+											</div>
+										</div>
 
-										<h5>Alias</h5>
-											<ul>
-												{% for item in data['alias_alternate_name']: %}
-													<li>{{ item }}</li>
-												{% endfor %}
-											</ul>
 									<hr>
 										<h4>Entrez Gene Summary</h4>
 										<p>{{ data['entrez_summary'] }}</p>
@@ -60,7 +66,7 @@
 										<p>{{ data['uniport_summary'] }}</p>
 									<hr>
 										<h4>Molecular Functions</h4>
-											<ul>
+											<ul class="alt">
 												{% for item in data['molecular_function']: %}
 													<li>{{ item }}</li>
 												{% endfor %}
@@ -90,5 +96,8 @@
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
 
+		<div id="titleBar">
+			<a href="#header" class="toggle"></a><span class="title"><a href="#">Genes</a></span>
+		</div>
 	</body>
 </html>

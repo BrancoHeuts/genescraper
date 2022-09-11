@@ -6,9 +6,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def get_gene_cards():
-    return render_template("index.html"
-                           , data=data
-                           )
+    return render_template("index.html", data=data)
 
 
 if __name__ == "__main__":

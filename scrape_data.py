@@ -1,25 +1,18 @@
 from urllib.request import Request, urlopen
 from bs4 import BeautifulSoup as bs
+import pandas as pd
+
+# TODO: 1. catch errors when scraping and replace output with NA
+# TODO: 2. Loading bar?
+# TODO: 3. Make index.html more readable
+# TODO 4: Fix nav bar
+# TODO 5: Implement search bar?
+# TODO 6: Make gene list unique
 
 url = "https://www.genecards.org/cgi-bin/carddisp.pl?gene="
 
-gene_list = [  # TODO: Import csv
-    "HMX3",
-    "BRE",
-    "SPI1"
-]
 
-
-def remove_redundant_strings(li):
-    """
-    Remove redundant "\r\n" characters at the start of each first list item. Also, removes last list item.
-    :param li: List of scraped items (stripped)
-    :return: List
-    """
-    li[0] = li[0].replace("\r\n", "")
-    li = li[:-1]
-    return li
-
+gene_list = pd.read_csv("./gene_list.csv", header=None).iloc[0]
 
 data = []
 for gene in gene_list:
@@ -34,6 +27,9 @@ for gene in gene_list:
     soup = bs(webpage, "html.parser")
 
     # ----- Aliases -----
+    # Main name
+    main_name = soup.body.find("span", class_='aliasMainName').get_text()
+
     # Description
     descriptions = soup.body.find_all(itemprop='description')
     description_list_stripped = [item.get_text() for item in descriptions]
@@ -55,6 +51,7 @@ for gene in gene_list:
         # UniProtKB/Swiss-Prot Summary
         if f"UniProtKB/Swiss-Prot Summary for {gene} Gene" in stripped_string:
             uniprot_summary = i.find_next("p").get_text()
+            uniprot_summary = uniprot_summary.split("\r\n")[1]
 
     # ----- Molecular function -----
     function = soup.body.find_all("div", class_="gc-subsection-inner-wrap")
@@ -64,10 +61,13 @@ for gene in gene_list:
         if "Function:" in stripped_string:
             function_string = i.find_next("li").get_text()
             function_list = function_string.split(".")
-            function_list = remove_redundant_strings(function_list)
+
+            # Remove redundant strings and list items
+            function_list[0] = function_list[0].replace("\r\n", "")
+            function_list = function_list[:-1]
 
     data_item = {
-        'gene_name': gene,  # TODO: Get GeneCard Symbol instead
+        'gene_name': main_name,
         'alias_description': description_list_stripped,
         'alias_alternate_name': alternate_name_list_stripped,
         'entrez_summary': entrez_summary,
@@ -75,5 +75,3 @@ for gene in gene_list:
         'molecular_function': function_list
     }
     data.append(data_item)
-
-print(data)
