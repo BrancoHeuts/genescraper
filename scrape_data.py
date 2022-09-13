@@ -4,10 +4,7 @@ from bs4 import BeautifulSoup as bs
 import pandas as pd
 from tqdm import tqdm
 
-# TODO: 1. catch errors when scraping and replace output with NA
-# TODO: 3. Make index.html more readable
-# TODO 4: Fix nav bar
-# TODO 5: Implement search bar?
+# TODO: Implement argparse
 
 url = "https://www.genecards.org/cgi-bin/carddisp.pl?gene="
 

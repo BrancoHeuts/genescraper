@@ -1,112 +1,117 @@
-<!DOCTYPE HTML>
-<!--
-	Read Only by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>Gene Card Scroller</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="{{ url_for('static', filename='assets/css/main.css') }}" />
-	</head>
-	<body class="is-preload">
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Gene Card Scroller</title>
+        <!-- Favicon -->
+        <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='assets/icons8-info-16.png') }}" />
+        <!-- Core theme CSS (includes Bootstrap) -->
+        <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet" />
+    </head>
 
-		<!-- Nav bar -->
-		<nav class="navbar navbar-light bg-light">
-		  <a class="navbar-brand">Navbar</a>
-		  <form class="form-inline">
-			<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-			<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-		  </form>
-		</nav>
+    <body>
 
-		<!-- Header -->
-			<section id="header">
-				<header>
-					<h1 id="logo"><a href="#">Genes</a></h1>
-				</header>
-				<nav id="nav">
-					<ul>
-						{% for data in data: %}
-							<li><a href="#section_{{ data['gene_name'] }}">{{ data['gene_name'] }}</a></li>
-						{% endfor %}
-					</ul>
-				</nav>
-			</section>
+        <!-- navbar -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+            <div class="container">
+                <a class="navbar-brand" href="#">Gene Card Scroller</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 
-		<!-- Wrapper -->
-			<div id="wrapper">
+                        <!-- Search -->
+                        <div class="input-group rounded">
+                          <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+                        </div>
+                        <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
 
-				<!-- Main -->
-					<div id="main">
+                        <!-- Dropdown -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Genes</a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                {% for data in data: %}
+							    <li><a class="dropdown-item" href="#section_{{ data['gene_name'] }}">{{ data['gene_name'] }}</a></li>
+						        {% endfor %}
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
 
-						<!-- One -->
-						{% for data in data: %}
-						<section id="section_{{ data['gene_name'] }}">
-								<div class="container">
-									<h3>{{ data['gene_name'] }}</h3>
+        <!-- Page content -->
+        <div class="container">
+            <div class="text-left mt-5">
+                {% for data in data: %}
+                    <section id="section_{{ data['gene_name'] }}">
 
-									<div class="row">
-											<div class="col-6 col-12-xsmall">
-												<h5>Description</h5>
-													<ul>
-														{% for item in data['alias_description']: %}
-															<li>{{ item }}</li>
-														{% endfor %}
-													</ul>
-											</div>
-											<div class="col-6 col-12-xsmall">
-												<h5>Alias</h5>
-													<ul>
-														{% for item in data['alias_alternate_name']: %}
-															<li>{{ item }}</li>
-														{% endfor %}
-													</ul>
-											</div>
-										</div>
+                        <!-- Gene -->
+                        <div class="container">
+                            <h3 style="color:#198754">{{ data['gene_name'] }}</h3>
 
-									<hr>
-										<h4>Entrez Gene Summary</h4>
-										<p>{{ data['entrez_summary'] }}</p>
-									<hr>
-										<h4>UniProtKB/Swiss-Prot Summary</h4>
-										<p>{{ data['uniport_summary'] }}</p>
-									<hr>
-										<h4>Molecular Functions</h4>
-											<ul class="alt">
-												{% for item in data['molecular_function']: %}
-													<li>{{ item }}</li>
-												{% endfor %}
-											</ul>
+                            <hr>
+                            <div class="row">
+                                <div class="col-sm pb-5">
 
-								</div>
-							</section>
-						{% endfor %}
+                                    <!-- Description -->
+                                    <h5>Description</h5>
+                                    <ul class="list-group list-group-flush">
 
-				<!-- Footer -->
-					<section id="footer">
-						<div class="container">
-							<ul class="copyright">
-								<li>&copy; 2022 Branco Heuts &nbsp;&bull;&nbsp; Design: <a href="http://html5up.net" target="_blank">HTML5 UP</a> &nbsp;&bull;&nbsp; Edited by Branco</a></li>
-							</ul>
-						</div>
-					</section>
+                                        {% for item in data['alias_description']: %}
+                                            <li class="list-group-item">{{ item }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
 
-			</div>
+                                <div class="col-sm pb-5">
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+                                    <!-- Alias -->
+                                    <h5>Alias</h5>
+                                    <ul class="list-group list-group-flush">
+                                        {% for item in data['alias_alternate_name']: %}
+                                            <li class="list-group-item">{{ item }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
 
-		<div id="titleBar">
-			<a href="#header" class="toggle"></a><span class="title"><a href="#">Genes</a></span>
-		</div>
-	</body>
+                            <div class="col-sm pb-5">
+
+                                <!-- Entrez Gene Summary -->
+                                <h5>Entrez Gene Summary</h5>
+                                <p>{{ data['entrez_summary'] }}</p>
+                            </div>
+
+                            <div class="col-sm pb-5">
+
+                                <!-- UniProtKB/Swiss-Prot Summary -->
+                                <h5>UniProtKB/Swiss-Prot Summary</h5>
+                                <p>{{ data['uniport_summary'] }}</p>
+                            </div>
+
+                            <div class="col-sm pb-5">
+
+                                <!-- Molecular Functions -->
+                                <h5>Molecular Functions</h5>
+                                <ul class="alt">
+                                    {% for item in data['molecular_function']: %}
+                                        <li style="margin-bottom: 5px">{{ item }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                {% endfor %}
+
+            </div>
+        </div>
+
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+    </body>
 </html>
