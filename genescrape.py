@@ -1,17 +1,36 @@
+import argparse
+import pandas as pd
+from flask import Flask, render_template
+from tqdm import tqdm
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError
 from bs4 import BeautifulSoup as bs
-import pandas as pd
-from tqdm import tqdm
+from datetime import datetime as dt
 
-# TODO: Implement argparse
-# TODO: Test exception 404
 
+# ----- Argparse -----
+parser = argparse.ArgumentParser()
+parser.add_argument(
+        "-c",
+        "--csv",
+        help="Gene list as input file. Comma separated file (.csv) without headers.")
+args = parser.parse_args()
+
+if args.csv is None or not args.csv.endswith('.csv'):
+    raise ValueError(
+        "Please use the '-c' or '--csv' flag."
+        "Needs a Comma Separated File (.csv) as input. "
+    )
+
+# Import csv
+gene_list = pd.read_csv(args.csv, header=None).iloc[0].unique()
+
+
+app = Flask(__name__)
+
+
+# ----- Webscrape -----
 url = "https://www.genecards.org/cgi-bin/carddisp.pl?gene="
-
-
-gene_list = pd.read_csv("./gene_list.csv", header=None).iloc[0].unique()
-
 data = []
 for gene in tqdm(gene_list):
 
@@ -77,13 +96,15 @@ for gene in tqdm(gene_list):
 
     except HTTPError as err:  # If gene does not exist
         if err.code == 404:
-            data_item = {
-                'gene_name': "NA",
-                'alias_description': ["NA"],
-                'alias_alternate_name': ["NA"],
-                'entrez_summary': "NA",
-                'uniport_summary': "NA",
-                'molecular_function': ["NA"]
-            }
+            print(f"{gene} not found.")
         else:
             raise
+
+
+@app.route('/')
+def get_gene_cards():
+    return render_template("index.html", data=data, year=dt.today().year)
+
+
+if __name__ == "__main__":
+    app.run(debug=False, host="0.0.0.0", port=5000)

@@ -17,16 +17,8 @@
         <!-- navbar -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-success">
             <div class="container">
-                <a class="navbar-brand" href="#">Gene Card Scroller</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <a class="navbar-brand" href="#" style="color:#FAFAFA">Gene Card Scroller</a>
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-
-                        <!-- Search -->
-                        <div class="input-group rounded">
-                          <input type="search" class="form-control rounded" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-                        </div>
-                        <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
 
                         <!-- Dropdown -->
                         <li class="nav-item dropdown">
@@ -37,8 +29,8 @@
 						        {% endfor %}
                             </ul>
                         </li>
+
                     </ul>
-                </div>
             </div>
         </nav>
 
@@ -107,6 +99,11 @@
                 {% endfor %}
 
             </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center p-4" style="background-color: #F6F6F6;">
+			© {{ year }} Branco Heuts
         </div>
 
         <!-- Bootstrap core JS-->
