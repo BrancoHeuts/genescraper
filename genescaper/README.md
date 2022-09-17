@@ -5,7 +5,7 @@ A Flask application that lets you scroll through GeneCard's gene summaries.
 ## Installation
 Install genescraper with pip
 ```bash
-  pip install genescraper
+  pip install git+https://github.com/Branco-Heuts/GeneScraper
 ```
 ## Requirements
 * beautifulsoup4==4.11.1
