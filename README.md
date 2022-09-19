@@ -1,6 +1,6 @@
 # Gene Card Scroller
 A Flask application that lets you scroll through GeneCard's gene summaries, granted you provide a list of genes.
-<hr>
+
 
 ## Installation
 Install genescraper with pip
