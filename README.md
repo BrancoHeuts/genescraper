@@ -12,6 +12,8 @@ Make sure you provide a comma separated file (.csv), without headers or row-name
 
 Run the command in the terminal:
 > $ python genescraper.py -c gene_list.csv
-> 
+
+
+After running click: http://127.0.0.1:5000 or http://10.252.0.13:5000
 <br></br>
 Warning: a large list of genes is not recommended, the webscraping can be slow.
