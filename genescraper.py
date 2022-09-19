@@ -10,17 +10,17 @@ from datetime import datetime as dt
 
 # ----- Argparse -----
 parser = argparse.ArgumentParser()
-parser.add_argument(
+csv_input = parser.add_argument(
         "-c",
         "--csv",
         help="Gene list as input file. Comma separated file (.csv) without headers.")
 args = parser.parse_args()
 
 if args.csv is None or not args.csv.endswith('.csv'):
-    raise ValueError(
-        "Please use the '-c' or '--csv' flag."
-        "Needs a Comma Separated File (.csv) as input. "
-    )
+    raise argparse.ArgumentError(csv_input,
+                                 "\n\n> Please use the '-c' or '--csv' flag. "
+                                 "A gene list needs to be provided as a Comma Separated File (.csv). \n\n" +
+                                 parser.format_help())
 
 # Import csv
 gene_list = pd.read_csv(args.csv, header=None).iloc[0].unique()
