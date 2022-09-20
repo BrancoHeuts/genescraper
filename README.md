@@ -1,5 +1,5 @@
 # Gene Card Scroller
-A Flask application that lets you scroll through GeneCard's gene summaries, granted you provide a list of genes.
+A Flask web application (made with Bootstrap) that lets you scroll through GeneCard's gene summaries, granted you provide a list of genes.
 
 
 ## Installation
