@@ -12,7 +12,7 @@ Make sure you provide a comma separated file (.csv), without headers or row-name
 
 Run the command in the terminal:
 ```bash 
-python genescraper.py -c gene_list.csv
+genescraper -c gene_list.csv
 ```
 
 
