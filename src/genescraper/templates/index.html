@@ -94,6 +94,17 @@
                                     {% endfor %}
                                 </ul>
                             </div>
+
+                            <div class="col-sm pb-5">
+
+                                <!-- Extra Links -->
+                                <h5>Extra Links</h5>
+                                <ul class="alt">
+                                    {% for key, value in data['extra_links'].items(): %}
+                                        <li style="margin-bottom: 5px"><a href='{{ value }}' target="_blank">{{ key }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
                         </div>
                     </section>
                 {% endfor %}

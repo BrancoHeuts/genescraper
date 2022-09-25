@@ -1,0 +1,2 @@
+[console_scripts]
+genescraper = genescraper.__main__:app.run

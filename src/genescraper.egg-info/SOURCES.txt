@@ -1,0 +1,17 @@
+LICENSE
+MANIFEST.in
+README.md
+pyproject.toml
+setup.py
+src/genescraper/__init__.py
+src/genescraper/__main__.py
+src/genescraper.egg-info/PKG-INFO
+src/genescraper.egg-info/SOURCES.txt
+src/genescraper.egg-info/dependency_links.txt
+src/genescraper.egg-info/entry_points.txt
+src/genescraper.egg-info/requires.txt
+src/genescraper.egg-info/top_level.txt
+src/genescraper/static/assets/icons8-info-16.png
+src/genescraper/static/css/styles.css
+src/genescraper/static/js/scripts.js
+src/genescraper/templates/index.html

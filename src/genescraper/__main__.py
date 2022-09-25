@@ -1,10 +1,10 @@
 import argparse
 import pandas as pd
-from flask import Flask, render_template
 from tqdm import tqdm
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError
 from bs4 import BeautifulSoup as bs
+from flask import Flask, render_template
 from datetime import datetime as dt
 
 
@@ -22,12 +22,9 @@ if args.csv is None or not args.csv.endswith('.csv'):
                                  "A gene list needs to be provided as a Comma Separated File (.csv). \n\n" +
                                  parser.format_help())
 
+
 # Import csv
 gene_list = pd.read_csv(args.csv, header=None).iloc[0].unique()
-
-
-app = Flask(__name__)
-
 
 # ----- Webscrape -----
 url = "https://www.genecards.org/cgi-bin/carddisp.pl?gene="
@@ -84,13 +81,23 @@ for gene in tqdm(gene_list):
                 function_list[0] = function_list[0].replace("\r\n", "")
                 function_list = function_list[:-1]
 
+        # ----- Extra Links -----
+        links_dict = {
+            'Wikipedia': f'https://en.wikipedia.org/wiki/{main_name}',
+            'DepMap': f'https://depmap.org/portal/gene/{main_name}',
+            'The Human Protein Atlas': f'https://www.proteinatlas.org/search/{main_name}',
+            'UniProt': f'https://www.uniprot.org/uniprotkb?query={main_name}',
+            'GeneCard': f'https://www.genecards.org/cgi-bin/carddisp.pl?gene={main_name}',
+        }
+
         data_item = {
             'gene_name': main_name,
             'alias_description': description_list_stripped,
             'alias_alternate_name': alternate_name_list_stripped,
             'entrez_summary': entrez_summary,
             'uniport_summary': uniprot_summary,
-            'molecular_function': function_list
+            'molecular_function': function_list,
+            'extra_links': links_dict,
         }
         data.append(data_item)
 
@@ -98,7 +105,11 @@ for gene in tqdm(gene_list):
         if err.code == 404:
             print(f"{gene} not found.")
         else:
-            raise
+            raise KeyError("Something else went wrong.")
+
+
+# ----- Flask App -----
+app = Flask(__name__)
 
 
 @app.route('/')
